@@ -1,11 +1,11 @@
-// Function to fetch and render markdowns
 async function loadMarkdown(file, containerId) {
   const response = await fetch(file);
   const text = await response.text();
-  document.getElementById(containerId).innerHTML = marked.parse(text);
+  const html = marked.parse(text, { breaks: true });
+  document.getElementById(containerId).innerHTML = html;
 }
 
-// Load markdowns for each model
+// Load model outputs
 loadMarkdown("assets/model1.md", "model1");
 loadMarkdown("assets/model2.md", "model2");
 loadMarkdown("assets/model3.md", "model3");
