@@ -1,25 +1,25 @@
 // === Define your OCR models ===
 const models = [
-  { label: "Model 1", file: "assets/model1.md" },
-  { label: "Model 2", file: "assets/model2.md" },
-  { label: "Model 3", file: "assets/model3.md" }
-  // Add more: { label: "Model 4", file: "assets/model4.md" }
+  { label: "Model 1", file: "assets/model1.md", color: "#007BFF" }, // Blue
+  { label: "Model 2", file: "assets/model2.md", color: "#28A745" }, // Green
+  { label: "Model 3", file: "assets/model3.md", color: "#FF8800" }  // Orange
+  // Add more if needed e.g. { label: "Model 4", file: "assets/model4.md", color: "#8e44ad" }
 ];
 
-// === Populate grid dynamically ===
+// === Dynamically populate the grid ===
 const grid = document.getElementById("modelGrid");
 
 models.forEach((model, i) => {
   const column = document.createElement("div");
   column.className = "markdown-column";
   column.innerHTML = `
-    <h3>${model.label}</h3>
+    <h3 style="background-color:${model.color}">${model.label}</h3>
     <div class="markdown-box" id="model${i + 1}"></div>
   `;
   grid.appendChild(column);
 });
 
-// === Load markdowns and render with Marked ===
+// === Load markdown files and render them ===
 async function loadMarkdown(file, containerId) {
   const response = await fetch(file);
   const text = await response.text();
@@ -27,10 +27,9 @@ async function loadMarkdown(file, containerId) {
   document.getElementById(containerId).innerHTML = html;
 }
 
-// Load all models
 models.forEach((m, i) => loadMarkdown(m.file, `model${i + 1}`));
 
-// === Modal logic ===
+// === Modal for markdown zoom view ===
 const modal = document.getElementById("modal");
 const modalText = document.getElementById("modal-text");
 const closeModal = document.querySelector(".close");
@@ -71,3 +70,9 @@ const observer = new MutationObserver(() => {
 });
 
 observer.observe(grid, { childList: true, subtree: true });
+
+// === Click-to-zoom KYC image ===
+const kycImage = document.getElementById("kycImage");
+kycImage.addEventListener("click", () => {
+  kycImage.classList.toggle("enlarged");
+});
