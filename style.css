@@ -12,18 +12,36 @@ body {
   padding: 20px;
 }
 
+/* === Image scaling === */
 .image-container {
   margin-bottom: 40px;
+  position: relative;
 }
 
 .kyc-image {
-  max-width: 80%;
+  width: 25%;
   height: auto;
   border: 2px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: zoom-in;
+  transition: all 0.3s ease-in-out;
 }
 
+.kyc-image.enlarged {
+  width: 80%;
+  cursor: zoom-out;
+  z-index: 5;
+  position: relative;
+}
+
+.image-hint {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* === Grid layout === */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -31,15 +49,17 @@ body {
   padding: 10px;
 }
 
+/* Model header with color variations */
 .markdown-column h3 {
   text-align: center;
-  background: #f3f3f3;
   border-radius: 8px 8px 0 0;
   margin: 0;
   padding: 10px;
   font-weight: 600;
+  color: #fff;
 }
 
+/* Markdown content */
 .markdown-box {
   text-align: left;
   background: white;
@@ -57,7 +77,7 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Markdown text tweaks */
+/* Markdown readability tweaks */
 .markdown-box h1, .markdown-box h2, .markdown-box h3 {
   border-bottom: 1px solid #eee;
   padding-bottom: 4px;
@@ -66,7 +86,7 @@ body {
 .markdown-box ul, .markdown-box ol { padding-left: 20px; }
 .markdown-box strong { color: #333; }
 
-/* Modal */
+/* Modal viewer for markdown */
 .modal {
   display: none;
   position: fixed;
