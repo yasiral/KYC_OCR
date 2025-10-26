@@ -1,3 +1,13 @@
+---
+
+## 🖼️ Scanned Form Image (Centered at Top)
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="KYC_form.jpg" alt="Scanned KYC Form" width="100%" style="max-width: 800px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+</div>
+
+---
+
 # CIF/KYC UPDATION FORM FOR INDIVIDUALS
 
 > *Purpose of Updation:* ☑ On Customer's Request  
@@ -21,15 +31,6 @@ DERA GHAZI KHAN BRANCH
 
 Due to **CELL UPDATION / ADDRESS SHORT** reason, I/we would like to update my / our below mentioned information (as applicable) into your respective records.
 
----
-
-## 🖼️ Scanned Form Image (Centered at Top)
-
-<div style="text-align: center; margin: 2rem 0;">
-  <img src="KYC_form.jpg" alt="Scanned KYC Form" width="100%" style="max-width: 800px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
-</div>
-
----
 
 ## 🧠 OCR Results Comparison (Grid of 3 per Row)
 
