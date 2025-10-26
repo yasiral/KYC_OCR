@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fafafa;
   margin: 0;
   padding: 0;
@@ -27,17 +27,27 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
+  gap: 25px;
   padding: 10px;
 }
 
+.markdown-column h3 {
+  text-align: center;
+  background-color: #f3f3f3;
+  border-radius: 8px 8px 0 0;
+  margin: 0;
+  padding: 10px;
+  font-weight: 600;
+}
+
 .markdown-box {
+  text-align: left;
   background: white;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   padding: 15px;
   overflow-y: auto;
-  max-height: 500px;
+  max-height: 600px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -45,6 +55,33 @@ body {
 .markdown-box:hover {
   transform: scale(1.02);
   box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Markdown styling */
+.markdown-box h1, .markdown-box h2, .markdown-box h3 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+.markdown-box ul, .markdown-box ol {
+  padding-left: 20px;
+}
+.markdown-box p {
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.markdown-box strong {
+  color: #333;
+}
+.markdown-box code {
+  background: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.markdown-box blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 10px;
+  color: #555;
+  margin: 10px 0;
 }
 
 /* Modal styling */
@@ -66,7 +103,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   max-width: 80%;
-  max-height: 80%;
+  max-height: 85%;
   overflow-y: auto;
 }
 
