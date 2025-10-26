@@ -4,30 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KYC Form OCR Comparison</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
   <div class="container">
     <h1>KYC Form OCR Comparison</h1>
+
     <div class="image-container">
-      <img src="assets/KYC_form.jpg" alt="KYC Form" class="kyc-image">
+      <img src="assets/KYC_form.jpg" alt="KYC Form" class="kyc-image" />
     </div>
 
-    <div class="grid">
-      <div class="markdown-column">
-        <h3>SuryaOCR</h3>
-        <div class="markdown-box" id="model1"></div>
-      </div>
-      <div class="markdown-column">
-        <h3>PaddleOCR</h3>
-        <div class="markdown-box" id="model2"></div>
-      </div>
-      <div class="markdown-column">
-        <h3>Qwen-VL</h3>
-        <div class="markdown-box" id="model3"></div>
-      </div>
+    <div class="grid" id="modelGrid">
+      <!-- model columns will auto-populate here -->
     </div>
   </div>
 
