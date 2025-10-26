@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fafafa;
+  background: #fafafa;
   margin: 0;
   padding: 0;
 }
@@ -21,7 +21,7 @@ body {
   height: auto;
   border: 2px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .grid {
@@ -33,7 +33,7 @@ body {
 
 .markdown-column h3 {
   text-align: center;
-  background-color: #f3f3f3;
+  background: #f3f3f3;
   border-radius: 8px 8px 0 0;
   margin: 0;
   padding: 10px;
@@ -54,47 +54,26 @@ body {
 
 .markdown-box:hover {
   transform: scale(1.02);
-  box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Markdown styling */
+/* Markdown text tweaks */
 .markdown-box h1, .markdown-box h2, .markdown-box h3 {
   border-bottom: 1px solid #eee;
   padding-bottom: 4px;
 }
-.markdown-box ul, .markdown-box ol {
-  padding-left: 20px;
-}
-.markdown-box p {
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-.markdown-box strong {
-  color: #333;
-}
-.markdown-box code {
-  background: #f4f4f4;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-.markdown-box blockquote {
-  border-left: 4px solid #ddd;
-  padding-left: 10px;
-  color: #555;
-  margin: 10px 0;
-}
+.markdown-box p { line-height: 1.5; margin-bottom: 10px; }
+.markdown-box ul, .markdown-box ol { padding-left: 20px; }
+.markdown-box strong { color: #333; }
 
-/* Modal styling */
+/* Modal */
 .modal {
   display: none;
   position: fixed;
   z-index: 10;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.6);
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .modal-content {
