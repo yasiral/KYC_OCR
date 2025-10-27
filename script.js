@@ -1,7 +1,7 @@
 // === Define your OCR models ===
 const models = [
-  { label: "Model 1", file: "assets/model1.md", color: "#007BFF" }, // Blue
-  { label: "Model 2", file: "assets/model2.md", color: "#28A745" }, // Green
+  { label: "Infinity Parser", file: "assets/model1.md", color: "#007BFF" }, // Blue
+  { label: "DeepSeek-OCR", file: "assets/model2.md", color: "#28A745" }, // Green
   { label: "Model 3", file: "assets/model3.md", color: "#FF8800" }  // Orange
   // Add more if needed e.g. { label: "Model 4", file: "assets/model4.md", color: "#8e44ad" }
 ];
