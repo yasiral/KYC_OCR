@@ -1,8 +1,9 @@
 // === Define models ===
 const models = [
-  { label: "Model 1", file: "assets/model1.md", color: "#007BFF" },
-  { label: "Model 2", file: "assets/model2.md", color: "#28A745" },
-  { label: "Model 3", file: "assets/model3.md", color: "#FF8800" }
+  { label: "Infinity Parser", file: "assets/model1.md", color: "#007BFF" },
+  { label: "DeepSeek-OCR", file: "assets/model2.md", color: "#28A745" },
+  { label: "Dots.ocr", file: "assets/model3.md", color: "#FF8800" }
+  { label: "OlmOCR2", file: "assets/model4.md", color: "#FF8800" }
 ];
 
 // === Build grid ===
