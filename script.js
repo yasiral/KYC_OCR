@@ -15,13 +15,10 @@ const models = [
 
 const docTypes = {
   "KYC Form": "kyc",
-  "Research Paper": "research",
-  "Invoice": "invoice",
-  "Arabic Document": "arabic",
-  "Old Document": "old"
+  "Arabic Document": "arabic"
 };
 
-/* ================ ELEMENTS ================ */
+/* ================= GLOBALS ================= */
 const grid = document.getElementById("modelGrid");
 const modelA = document.getElementById("modelA");
 const modelB = document.getElementById("modelB");
@@ -39,7 +36,15 @@ let scrollSyncActive = false;
 let syncedBoxes = [];
 let syncLock = false;
 
-/* ================ INIT ================ */
+/* ================= INIT ================= */
+window.addEventListener("load", () => {
+  populateDocTypeSelector();
+  buildGrid();
+  loadAllMarkdowns();
+  enableScrollSync(false);
+});
+
+/* ================= UI BUILDERS ================= */
 function populateDocTypeSelector() {
   const sel = document.createElement("select");
   sel.id = "docTypeSelector";
@@ -77,12 +82,13 @@ function buildGrid() {
   });
 }
 
-/* ================ LOAD MARKDOWN ================ */
+/* ================= LOAD MARKDOWN ================= */
 async function loadMarkdown(modelIndex) {
   const file = `assets/${currentDocType}/model${modelIndex + 1}.md`;
   const box = document.getElementById(`model-${modelIndex}`);
   try {
     const res = await fetch(file);
+    if (!res.ok) throw new Error("File not found");
     const text = await res.text();
     const html = marked.parse(text, { breaks: true });
     box.innerHTML = html;
@@ -91,11 +97,12 @@ async function loadMarkdown(modelIndex) {
     box.innerHTML = `<p style="color:red">Missing file: ${file}</p>`;
   }
 }
+
 function loadAllMarkdowns() {
   models.forEach((_, i) => loadMarkdown(i));
 }
 
-/* ================ COLLAPSIBLE ================ */
+/* ================= COLLAPSIBLE ================= */
 document.addEventListener("click", (e) => {
   if (e.target.matches(".markdown-column h3")) {
     const box = e.target.nextElementSibling;
@@ -104,12 +111,12 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* ================ IMAGE ZOOM ================ */
+/* ================= IMAGE ZOOM ================= */
 kycImage.addEventListener("click", () => {
   kycImage.classList.toggle("enlarged");
 });
 
-/* ================ SEARCH / HIGHLIGHT ================ */
+/* ================= SEARCH / HIGHLIGHT ================= */
 function applyHighlight(term) {
   document.querySelectorAll(".markdown-box").forEach((box) => {
     if (box.dataset.raw) box.innerHTML = box.dataset.raw;
@@ -125,7 +132,7 @@ clearSearch.addEventListener("click", () => {
   applyHighlight("");
 });
 
-/* ================ DIFF VIEWER ================ */
+/* ================= DIFF VIEWER ================= */
 compareBtn.addEventListener("click", () => {
   const a = +modelA.value, b = +modelB.value;
   if (a === b) return alert("Select two different models!");
@@ -139,7 +146,7 @@ compareBtn.addEventListener("click", () => {
   diffModal.style.display = "block";
 });
 
-/* ================ SPLIT MODE ================ */
+/* ================= SPLIT MODE ================= */
 splitBtn.addEventListener("click", () => {
   splitActive = !splitActive;
   const a = +modelA.value, b = +modelB.value;
@@ -159,24 +166,25 @@ splitBtn.addEventListener("click", () => {
   }
 });
 
-/* ================ SCROLL SYNC (only when active) ================ */
-let syncedBoxes = [];
-
+/* ================= SCROLL SYNC ================= */
 function visibleBoxes() {
   return [...document.querySelectorAll(".markdown-box")].filter(box => {
     const parent = box.closest(".markdown-column");
     return !box.classList.contains("collapsed") && getComputedStyle(parent).display !== "none";
   });
 }
+
 function enableScrollSync(enable) {
   scrollSyncActive = enable;
   refreshScrollSync();
 }
+
 function refreshScrollSync() {
   syncedBoxes.forEach(b => b.removeEventListener("scroll", onScrollSync));
   syncedBoxes = scrollSyncActive ? visibleBoxes() : [];
   syncedBoxes.forEach(b => b.addEventListener("scroll", onScrollSync));
 }
+
 function onScrollSync(e) {
   if (!scrollSyncActive || syncLock) return;
   syncLock = true;
@@ -189,11 +197,3 @@ function onScrollSync(e) {
   });
   syncLock = false;
 }
-
-/* ================ INIT ================ */
-window.addEventListener("load", () => {
-  populateDocTypeSelector();
-  buildGrid();
-  loadAllMarkdowns();
-  enableScrollSync(false);
-});
