@@ -13,238 +13,188 @@ const models = [
   { label: "MonkeyOCR", file: "assets/model11.md"},
 ];
 
-const HEADER_COLORS = [
-  "#0d6efd", // blue
-  "#28a745", // green
-  "#ff8800", // orange
-  "#8e44ad", // purple
-  "#20c997", // teal
-  "#e83e8c", // pink
-  "#6c757d", // gray
-  "#fd7e14", // amber
-  "#17a2b8", // cyan
-];
+const docTypes = {
+  "KYC Form": "kyc",
+  "Research Paper": "research",
+  "Invoice": "invoice",
+  "Arabic Document": "arabic",
+  "Old Document": "old"
+};
 
-/* =========================================================
-   Build grid + controls
-========================================================= */
+/* ================ ELEMENTS ================ */
 const grid = document.getElementById("modelGrid");
-
-// Create columns
-models.forEach((m, i) => {
-  const col = document.createElement("div");
-  col.className = "markdown-column";
-  col.innerHTML = `
-    <h3 style="--head:${HEADER_COLORS[i % HEADER_COLORS.length]}" data-index="${i}">${m.label}</h3>
-    <div class="markdown-box" id="model-${i}" data-index="${i}"><em>Loading...</em></div>
-  `;
-  grid.appendChild(col);
-});
-
-// Populate selects
 const modelA = document.getElementById("modelA");
 const modelB = document.getElementById("modelB");
-models.forEach((m, i) => {
-  modelA.add(new Option(m.label, i));
-  modelB.add(new Option(m.label, i));
-});
+const compareBtn = document.getElementById("compareBtn");
+const splitBtn = document.getElementById("splitModeBtn");
+const diffModal = document.getElementById("diffModal");
+const diffOutput = document.getElementById("diffOutput");
+const kycImage = document.getElementById("kycImage");
+const searchBox = document.getElementById("searchBox");
+const clearSearch = document.getElementById("clearSearch");
 
-/* =========================================================
-   Markdown loading + caching of raw HTML for highlight reset
-========================================================= */
-async function loadMarkdown(file, id) {
-  const res = await fetch(file);
-  const text = await res.text();
-  const html = marked.parse(text, { breaks: true });
-  const box = document.getElementById(id);
-  box.innerHTML = html;
-  box.dataset.raw = html; // store pristine HTML for clean highlighting toggles
+let currentDocType = "kyc";
+let splitActive = false;
+let scrollSyncActive = false;
+let syncedBoxes = [];
+let syncLock = false;
+
+/* ================ INIT ================ */
+function populateDocTypeSelector() {
+  const sel = document.createElement("select");
+  sel.id = "docTypeSelector";
+  Object.entries(docTypes).forEach(([label, folder]) => {
+    const opt = document.createElement("option");
+    opt.value = folder;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+  sel.value = currentDocType;
+  sel.addEventListener("change", () => {
+    currentDocType = sel.value;
+    loadAllMarkdowns();
+  });
+  document.querySelector(".toolbar").prepend(sel);
 }
-models.forEach((m, i) => loadMarkdown(m.file, `model-${i}`));
 
-/* =========================================================
-   Collapsible sections (click header toggles the next box)
-========================================================= */
+function buildGrid() {
+  grid.innerHTML = "";
+  models.forEach((m, i) => {
+    const col = document.createElement("div");
+    col.className = "markdown-column";
+    col.innerHTML = `
+      <h3 style="background:${m.color}" data-index="${i}">${m.label}</h3>
+      <div class="markdown-box" id="model-${i}"><em>Loading...</em></div>
+    `;
+    grid.appendChild(col);
+  });
+
+  modelA.innerHTML = "";
+  modelB.innerHTML = "";
+  models.forEach((m, i) => {
+    modelA.add(new Option(m.label, i));
+    modelB.add(new Option(m.label, i));
+  });
+}
+
+/* ================ LOAD MARKDOWN ================ */
+async function loadMarkdown(modelIndex) {
+  const file = `assets/${currentDocType}/model${modelIndex + 1}.md`;
+  const box = document.getElementById(`model-${modelIndex}`);
+  try {
+    const res = await fetch(file);
+    const text = await res.text();
+    const html = marked.parse(text, { breaks: true });
+    box.innerHTML = html;
+    box.dataset.raw = html;
+  } catch {
+    box.innerHTML = `<p style="color:red">Missing file: ${file}</p>`;
+  }
+}
+function loadAllMarkdowns() {
+  models.forEach((_, i) => loadMarkdown(i));
+}
+
+/* ================ COLLAPSIBLE ================ */
 document.addEventListener("click", (e) => {
   if (e.target.matches(".markdown-column h3")) {
-    const body = e.target.nextElementSibling;
-    body.classList.toggle("collapsed");
-    // Recompute scroll-sync list when collapsing/expanding
+    const box = e.target.nextElementSibling;
+    box.classList.toggle("collapsed");
     refreshScrollSync();
   }
 });
 
-/* =========================================================
-   Image zoom 25% <-> 80%
-========================================================= */
-const kycImage = document.getElementById("kycImage");
+/* ================ IMAGE ZOOM ================ */
 kycImage.addEventListener("click", () => {
   kycImage.classList.toggle("enlarged");
 });
 
-/* =========================================================
-   Modal for enlarging a markdown box on click
-========================================================= */
-const modal = document.getElementById("modal");
-const modalText = document.getElementById("modal-text");
-const closeModalEls = document.querySelectorAll(".close");
-
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("markdown-box")) {
-    modal.style.display = "block";
-    modalText.innerHTML = e.target.innerHTML;
-  }
-});
-
-closeModalEls.forEach((x) =>
-  x.addEventListener("click", () => {
-    modal.style.display = "none";
-    diffModal.style.display = "none";
-  })
-);
-
-window.addEventListener("click", (e) => {
-  if (e.target === modal) modal.style.display = "none";
-  if (e.target === diffModal) diffModal.style.display = "none";
-});
-
-/* =========================================================
-   Search / Highlight across all boxes (safe restore)
-========================================================= */
-const searchBox = document.getElementById("searchBox");
-const clearSearch = document.getElementById("clearSearch");
-
+/* ================ SEARCH / HIGHLIGHT ================ */
 function applyHighlight(term) {
   document.querySelectorAll(".markdown-box").forEach((box) => {
-    // Restore pristine HTML first
     if (box.dataset.raw) box.innerHTML = box.dataset.raw;
-
     if (term && term.trim()) {
-      const esc = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(esc, "gi");
+      const regex = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
       box.innerHTML = box.innerHTML.replace(regex, (m) => `<mark>${m}</mark>`);
     }
   });
 }
-
 searchBox.addEventListener("input", () => applyHighlight(searchBox.value));
 clearSearch.addEventListener("click", () => {
   searchBox.value = "";
   applyHighlight("");
 });
 
-/* =========================================================
-   Line-by-Line Diff Viewer
-========================================================= */
-const diffModal = document.getElementById("diffModal");
-const diffOutput = document.getElementById("diffOutput");
-const compareBtn = document.getElementById("compareBtn");
-
+/* ================ DIFF VIEWER ================ */
 compareBtn.addEventListener("click", () => {
-  const a = parseInt(modelA.value, 10);
-  const b = parseInt(modelB.value, 10);
-  if (a === b || isNaN(a) || isNaN(b)) {
-    alert("Select two different models to compare.");
-    return;
-  }
+  const a = +modelA.value, b = +modelB.value;
+  if (a === b) return alert("Select two different models!");
   const textA = document.getElementById(`model-${a}`).innerText;
   const textB = document.getElementById(`model-${b}`).innerText;
-
-  const parts = Diff.diffLines(textA, textB);
-  diffOutput.innerHTML = parts
-    .map((p) => {
-      const cls = p.added ? "diff-added" : p.removed ? "diff-removed" : "";
-      return `<span class="${cls}">${p.value.replace(/</g, "&lt;")}</span>`;
-    })
-    .join("");
+  const diff = Diff.diffLines(textA, textB);
+  diffOutput.innerHTML = diff.map(part => {
+    const cls = part.added ? "diff-added" : part.removed ? "diff-removed" : "";
+    return `<span class="${cls}">${part.value}</span>`;
+  }).join("");
   diffModal.style.display = "block";
 });
 
-/* =========================================================
-   Split-Screen Compare Mode (show only two)
-========================================================= */
-const splitBtn = document.getElementById("splitModeBtn");
-let splitActive = false;
-
-function setSplitMode(on) {
-  splitActive = on;
-  if (!on) {
-    document.body.classList.remove("split-mode");
-    document.querySelectorAll(".markdown-column").forEach((col) => {
-      col.style.display = "";
+/* ================ SPLIT MODE ================ */
+splitBtn.addEventListener("click", () => {
+  splitActive = !splitActive;
+  const a = +modelA.value, b = +modelB.value;
+  if (splitActive) {
+    if (a === b) return alert("Select two different models!");
+    document.body.classList.add("split-mode");
+    document.querySelectorAll(".markdown-column").forEach((col, i) => {
+      col.style.display = (i === a || i === b) ? "block" : "none";
     });
-    refreshScrollSync();
+    splitBtn.textContent = "Exit Split Mode";
+    enableScrollSync(true);
+  } else {
+    document.body.classList.remove("split-mode");
+    document.querySelectorAll(".markdown-column").forEach(col => col.style.display = "");
     splitBtn.textContent = "Split Compare Mode";
-    return;
+    enableScrollSync(false);
   }
+});
 
-  const a = parseInt(modelA.value, 10);
-  const b = parseInt(modelB.value, 10);
-  if (a === b || isNaN(a) || isNaN(b)) {
-    alert("Select two different models for split mode.");
-    return;
-  }
-
-  document.body.classList.add("split-mode");
-  document.querySelectorAll(".markdown-column").forEach((col, idx) => {
-    col.style.display = (idx === a || idx === b) ? "" : "none";
-  });
-  refreshScrollSync(); // resync only visible
-  splitBtn.textContent = "Exit Split Mode";
-}
-
-splitBtn.addEventListener("click", () => setSplitMode(!splitActive));
-
-/* =========================================================
-   Synchronized Scrolling (visible boxes only)
-========================================================= */
+/* ================ SCROLL SYNC (only when active) ================ */
 let syncLock = false;
 let syncedBoxes = [];
 
-function visibleMarkdownBoxes() {
-  return Array.from(document.querySelectorAll(".markdown-box"))
-    .filter((el) => {
-      const cs = getComputedStyle(el);
-      const parent = el.closest(".markdown-column");
-      return cs.display !== "none" &&
-             cs.visibility !== "hidden" &&
-             !el.classList.contains("collapsed") &&
-             getComputedStyle(parent).display !== "none";
-    });
-}
-
-function attachScrollSync() {
-  // remove old listeners by cloning nodes (simple and safe)
-  syncedBoxes.forEach((b) => {
-    const clone = b.cloneNode(true);
-    b.parentNode.replaceChild(clone, b);
-  });
-
-  syncedBoxes = visibleMarkdownBoxes();
-  syncedBoxes.forEach((box) => {
-    box.addEventListener("scroll", () => {
-      if (syncLock) return;
-      syncLock = true;
-      const { scrollTop, scrollHeight, clientHeight } = box;
-      const ratio =
-        (scrollHeight - clientHeight) > 0
-          ? scrollTop / (scrollHeight - clientHeight)
-          : 0;
-
-      syncedBoxes.forEach((other) => {
-        if (other === box) return;
-        const max = other.scrollHeight - other.clientHeight;
-        other.scrollTop = ratio * (max <= 0 ? 0 : max);
-      });
-      syncLock = false;
-    });
+function visibleBoxes() {
+  return [...document.querySelectorAll(".markdown-box")].filter(box => {
+    const parent = box.closest(".markdown-column");
+    return !box.classList.contains("collapsed") && getComputedStyle(parent).display !== "none";
   });
 }
-
+function enableScrollSync(enable) {
+  scrollSyncActive = enable;
+  refreshScrollSync();
+}
 function refreshScrollSync() {
-  // slight delay to allow layout changes to settle
-  setTimeout(attachScrollSync, 0);
+  syncedBoxes.forEach(b => b.removeEventListener("scroll", onScrollSync));
+  syncedBoxes = scrollSyncActive ? visibleBoxes() : [];
+  syncedBoxes.forEach(b => b.addEventListener("scroll", onScrollSync));
+}
+function onScrollSync(e) {
+  if (!scrollSyncActive || syncLock) return;
+  syncLock = true;
+  const src = e.target;
+  const ratio = src.scrollTop / (src.scrollHeight - src.clientHeight);
+  syncedBoxes.forEach(other => {
+    if (other !== src) {
+      other.scrollTop = ratio * (other.scrollHeight - other.clientHeight);
+    }
+  });
+  syncLock = false;
 }
 
-// initial attach once content loads
-window.addEventListener("load", refreshScrollSync);
+/* ================ INIT ================ */
+window.addEventListener("load", () => {
+  populateDocTypeSelector();
+  buildGrid();
+  loadAllMarkdowns();
+  enableScrollSync(false);
+});
