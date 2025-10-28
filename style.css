@@ -1,154 +1,143 @@
-/* ============ Base ============ */
-:root{
-  --bg:#fafafa;
-  --text:#111;
-  --card:#fff;
-  --border:#d9d9d9;
+:root {
+  --bg: #fafafa;
+  --text: #111;
+  --card: #fff;
+  --border: #d9d9d9;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.container{
-  max-width:1200px;
-  margin:0 auto;
-  padding:20px;
-  text-align:center;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* ============ Image ============ */
-.image-container{ margin-bottom:28px; }
-.kyc-image{
-  width:25%;
-  height:auto;
-  border:2px solid var(--border);
-  border-radius:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-  cursor:zoom-in;
-  transition:all .25s ease;
-}
-.kyc-image.enlarged{
-  width:80%;
-  cursor:zoom-out;
-  position:relative;
-  z-index:2;
-}
-.image-hint{ color:#666; font-size:.9rem; margin-top:6px }
-
-/* ============ Toolbar ============ */
-.toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:18px;
-}
-.toolbar input[type="text"], .toolbar select, .toolbar button{
-  padding:8px 10px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  background:#fff;
-  font:inherit;
-}
-.toolbar button{ cursor:pointer; }
-
-/* ============ Grid ============ */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
-  gap:22px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
-/* Column card */
-.markdown-column{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  min-height:180px;
+/* === Image === */
+.image-container { margin-bottom: 28px; }
+.kyc-image {
+  width: 25%;
+  height: auto;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+  cursor: zoom-in;
+  transition: all .25s ease;
+}
+.kyc-image.enlarged {
+  width: 80%;
+  cursor: zoom-out;
+  z-index: 2;
+}
+.image-hint { color: #666; font-size: .9rem; margin-top: 6px; }
+
+/* === Toolbar === */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.toolbar input[type="text"],
+.toolbar select,
+.toolbar button {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+}
+.toolbar button { cursor: pointer; }
+
+/* === Grid === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 22px;
 }
 
-/* Header (color set inline via JS or CSS var) */
-.markdown-column h3{
-  --head:#666;
-  margin:0;
-  padding:12px 14px;
-  color:#fff;
-  background:var(--head);
-  font-weight:700;
-  font-size:1rem;
-  cursor:pointer;
-  user-select:none;
+/* Model Cards */
+.markdown-column {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
 }
 
-/* Content */
-.markdown-box{
-  text-align:left;
-  padding:14px 16px;
-  max-height:520px;
-  overflow:auto;
-  transition:max-height .2s ease, opacity .2s ease;
-  will-change:scroll-position;
-}
-.markdown-box:hover{
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.03);
-}
-.markdown-box.collapsed{
-  display:none;
+.markdown-column h3 {
+  margin: 0;
+  padding: 12px 14px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
 }
 
-/* Basic MD typography */
-.markdown-box h1,.markdown-box h2,.markdown-box h3{
-  border-bottom:1px solid #eee;
-  padding-bottom:4px;
+.markdown-box {
+  text-align: left;
+  padding: 14px 16px;
+  max-height: 520px;
+  overflow-y: auto;
+  transition: max-height .2s ease, opacity .2s ease;
 }
-.markdown-box p{ line-height:1.55; margin:.6rem 0; }
-.markdown-box ul,.markdown-box ol{ padding-left:22px; }
-.markdown-box code{
-  background:#f6f6f6;
-  padding:2px 4px;
-  border-radius:4px;
+
+.markdown-box.collapsed { display: none; }
+
+/* Markdown Typography */
+.markdown-box h1, .markdown-box h2, .markdown-box h3 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+.markdown-box p { line-height: 1.55; margin: .6rem 0; }
+.markdown-box ul, .markdown-box ol { padding-left: 22px; }
+.markdown-box code {
+  background: #f6f6f6;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
 
 /* Highlight */
-mark{ background:yellow; color:#000; }
+mark { background: yellow; color: #000; }
 
-/* ============ Modals ============ */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  z-index:10;
+/* === Modal === */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  display: none;
+  z-index: 10;
 }
-.modal-content{
-  background:#fff;
-  margin:5% auto;
-  width:min(1000px, 90%);
-  max-height:85%;
-  overflow:auto;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 8px 40px rgba(0,0,0,.25);
+.modal-content {
+  background: #fff;
+  margin: 5% auto;
+  width: min(1000px, 90%);
+  max-height: 85%;
+  overflow: auto;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .25);
 }
-.close{ float:right; font-size:24px; font-weight:700; cursor:pointer }
+.close { float: right; font-size: 24px; font-weight: 700; cursor: pointer; }
 
 /* Diff viewer */
-#diffOutput{ white-space:pre-wrap; text-align:left; }
-.diff-added{ background:#eaffea; }
-.diff-removed{ background:#ffecec; }
+#diffOutput { white-space: pre-wrap; text-align: left; }
+.diff-added { background: #eaffea; }
+.diff-removed { background: #ffecec; }
 
-/* ============ Split Mode ============ */
-body.split-mode .grid{
-  grid-template-columns:repeat(2, 1fr);
-}
+/* === Split Mode === */
+body.split-mode .grid { grid-template-columns: repeat(2, 1fr); }
