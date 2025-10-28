@@ -1,17 +1,18 @@
 // === Define models ===
 const models = [
-  { label: "Infinity Parser", file: "assets/kyc/model1.md"},
-  { label: "DeepSeek-OCR", file: "assets/kyc/model2.md"},
-  { label: "OlmOCR2", file: "assets/kyc/model3.md"},
-  { label: "Dots.OCR", file: "assets/kyc/model4.md"},
-  { label: "Chandra OCR", file: "assets/kyc/model5.md"},
-  { label: "PaddleOCR-VL", file: "assets/kyc/model6.md"},
-  { label: "MinerU 2.5", file: "assets/kyc/model7.md"},
-  { label: "LightON OCR 1B", file: "assets/kyc/model8.md"},
-  { label: "Nanonets-OCR2", file: "assets/kyc/model9.md"},
-  { label: "Qwen3-VL", file: "assets/kyc/model10.md"},
-  { label: "MonkeyOCR", file: "assets/kyc/model11.md"},
+  { label: "Infinity Parser", file: "assets/kyc/model1.md", color: "#0d6efd" },
+  { label: "DeepSeek-OCR", file: "assets/kyc/model2.md", color: "#28a745" },
+  { label: "OlmOCR2", file: "assets/kyc/model3.md", color: "#ff8800" },
+  { label: "Dots.OCR", file: "assets/kyc/model4.md", color: "#8e44ad" },
+  { label: "Chandra OCR", file: "assets/kyc/model5.md", color: "#20c997" },
+  { label: "PaddleOCR-VL", file: "assets/kyc/model6.md", color: "#e83e8c" },
+  { label: "MinerU 2.5", file: "assets/kyc/model7.md", color: "#6c757d" },
+  { label: "LightON OCR 1B", file: "assets/kyc/model8.md", color: "#fd7e14" },
+  { label: "Nanonets-OCR2", file: "assets/kyc/model9.md", color: "#17a2b8" },
+  { label: "Qwen3-VL", file: "assets/kyc/model10.md", color: "#7952b3" },
+  { label: "MonkeyOCR", file: "assets/kyc/model11.md", color: "#198754" },
 ];
+
 
 const docTypes = {
   "KYC Form": "kyc",
