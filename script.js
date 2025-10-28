@@ -10,6 +10,7 @@ const models = [
   { label: "LightON OCR 1B", file: "assets/model8.md"},
   { label: "Nanonets-OCR2", file: "assets/model9.md"},
   { label: "Qwen3-VL", file: "assets/model10.md"},
+  { label: "MonkeyOCR", file: "assets/model11.md"},
 ];
 
 const HEADER_COLORS = [
