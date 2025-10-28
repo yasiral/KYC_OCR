@@ -4,7 +4,8 @@ const models = [
   { label: "DeepSeek-OCR", file: "assets/model2.md", color: "#28A745" },
   { label: "OlmOCR2", file: "assets/model3.md", color: "#FF8800" },
   { label: "Dots.OCR", file: "assets/model4.md", color: "#FF8000" },
-  { label: "Chandra OCR", file: "assets/model5.md", color: "#a89532" }
+  { label: "Chandra OCR", file: "assets/model5.md", color: "#a89532" },
+  { label: "PaddleOCR-VL", file: "assets/model6.md", color: "#c034eb" }
 ];
 
 // === Build grid ===
