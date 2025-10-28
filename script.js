@@ -2,8 +2,8 @@
 const models = [
   { label: "Infinity Parser", file: "assets/model1.md", color: "#007BFF" },
   { label: "DeepSeek-OCR", file: "assets/model2.md", color: "#28A745" },
-  { label: "Dots.ocr", file: "assets/model3.md", color: "#FF8800" },
-  { label: "OlmOCR2", file: "assets/model4.md", color: "#FF8000" }
+  { label: "OlmOCR2", file: "assets/model3.md", color: "#FF8800" },
+  { label: "Dots.OCR", file: "assets/model4.md", color: "#FF8000" }
 ];
 
 // === Build grid ===
