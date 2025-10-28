@@ -80,7 +80,9 @@ function buildGrid() {
     const col = document.createElement("div");
     col.className = "markdown-column";
     col.innerHTML = `
-      <h3 style="background:${color}; color:white;" data-index="${i}">${m.label}</h3>
+      <div class="model-header" style="background:${color}">
+        <span class="model-title">${m.label}</span>
+      </div>
       <div class="markdown-box" id="model-${i}"><em>Loading...</em></div>
     `;
     grid.appendChild(col);
@@ -94,6 +96,7 @@ function buildGrid() {
     modelB.add(new Option(m.label, i));
   });
 }
+
 
 /* ================= LOAD MARKDOWN ================= */
 async function loadMarkdown(modelIndex) {
@@ -124,6 +127,15 @@ document.addEventListener("click", (e) => {
     refreshScrollSync();
   }
 });
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".model-header, .model-title")) {
+    const box = e.target.closest(".markdown-column").querySelector(".markdown-box");
+    box.classList.toggle("collapsed");
+    refreshScrollSync();
+  }
+});
+
 
 /* ================= IMAGE ZOOM ================= */
 kycImage.addEventListener("click", () => {
