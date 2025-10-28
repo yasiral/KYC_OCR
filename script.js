@@ -1,18 +1,17 @@
-// === Define models ===
+/* ================= CONFIG ================= */
 const models = [
-  { label: "Infinity Parser", file: "assets/kyc/model1.md", color: "#0d6efd" },
-  { label: "DeepSeek-OCR", file: "assets/kyc/model2.md", color: "#28a745" },
-  { label: "OlmOCR2", file: "assets/kyc/model3.md", color: "#ff8800" },
-  { label: "Dots.OCR", file: "assets/kyc/model4.md", color: "#8e44ad" },
-  { label: "Chandra OCR", file: "assets/kyc/model5.md", color: "#20c997" },
-  { label: "PaddleOCR-VL", file: "assets/kyc/model6.md", color: "#e83e8c" },
-  { label: "MinerU 2.5", file: "assets/kyc/model7.md", color: "#6c757d" },
-  { label: "LightON OCR 1B", file: "assets/kyc/model8.md", color: "#fd7e14" },
-  { label: "Nanonets-OCR2", file: "assets/kyc/model9.md", color: "#17a2b8" },
-  { label: "Qwen3-VL", file: "assets/kyc/model10.md", color: "#7952b3" },
-  { label: "MonkeyOCR", file: "assets/kyc/model11.md", color: "#198754" },
+  { label: "Infinity Parser", file: "assets/kyc/model1.md" },
+  { label: "DeepSeek-OCR", file: "assets/kyc/model2.md" },
+  { label: "OlmOCR2", file: "assets/kyc/model3.md" },
+  { label: "Dots.OCR", file: "assets/kyc/model4.md" },
+  { label: "Chandra OCR", file: "assets/kyc/model5.md" },
+  { label: "PaddleOCR-VL", file: "assets/kyc/model6.md" },
+  { label: "MinerU 2.5", file: "assets/kyc/model7.md" },
+  { label: "LightON OCR 1B", file: "assets/kyc/model8.md" },
+  { label: "Nanonets-OCR2", file: "assets/kyc/model9.md" },
+  { label: "Qwen3-VL", file: "assets/kyc/model10.md" },
+  { label: "MonkeyOCR", file: "assets/kyc/model11.md" }
 ];
-
 
 const docTypes = {
   "KYC Form": "kyc",
@@ -37,6 +36,11 @@ let scrollSyncActive = false;
 let syncedBoxes = [];
 let syncLock = false;
 
+const HEADER_COLORS = [
+  "#0d6efd", "#28a745", "#ff8800", "#8e44ad", "#20c997",
+  "#e83e8c", "#6c757d", "#fd7e14", "#17a2b8", "#7952b3", "#198754"
+];
+
 /* ================= INIT ================= */
 window.addEventListener("load", () => {
   populateDocTypeSelector();
@@ -47,34 +51,42 @@ window.addEventListener("load", () => {
 
 /* ================= UI BUILDERS ================= */
 function populateDocTypeSelector() {
+  const toolbar = document.querySelector(".toolbar");
+  const existing = document.getElementById("docTypeSelector");
+  if (existing) existing.remove();
+
   const sel = document.createElement("select");
   sel.id = "docTypeSelector";
+
   Object.entries(docTypes).forEach(([label, folder]) => {
     const opt = document.createElement("option");
     opt.value = folder;
     opt.textContent = label;
     sel.appendChild(opt);
   });
+
   sel.value = currentDocType;
   sel.addEventListener("change", () => {
     currentDocType = sel.value;
     loadAllMarkdowns();
   });
-  document.querySelector(".toolbar").prepend(sel);
+  toolbar.prepend(sel);
 }
 
 function buildGrid() {
   grid.innerHTML = "";
   models.forEach((m, i) => {
+    const color = HEADER_COLORS[i % HEADER_COLORS.length];
     const col = document.createElement("div");
     col.className = "markdown-column";
     col.innerHTML = `
-      <h3 style="background:${m.color}" data-index="${i}">${m.label}</h3>
+      <h3 style="background:${color}; color:white;" data-index="${i}">${m.label}</h3>
       <div class="markdown-box" id="model-${i}"><em>Loading...</em></div>
     `;
     grid.appendChild(col);
   });
 
+  // Populate dropdowns for diff compare
   modelA.innerHTML = "";
   modelB.innerHTML = "";
   models.forEach((m, i) => {
@@ -85,7 +97,8 @@ function buildGrid() {
 
 /* ================= LOAD MARKDOWN ================= */
 async function loadMarkdown(modelIndex) {
-  const file = `assets/${currentDocType}/model${modelIndex + 1}.md`;
+  const model = models[modelIndex];
+  const file = model.file.replace("kyc", currentDocType);
   const box = document.getElementById(`model-${modelIndex}`);
   try {
     const res = await fetch(file);
