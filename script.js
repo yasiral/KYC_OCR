@@ -1,16 +1,16 @@
 // === Define models ===
 const models = [
-  { label: "Infinity Parser", file: "assets/model1.md"},
-  { label: "DeepSeek-OCR", file: "assets/model2.md"},
-  { label: "OlmOCR2", file: "assets/model3.md"},
-  { label: "Dots.OCR", file: "assets/model4.md"},
-  { label: "Chandra OCR", file: "assets/model5.md"},
-  { label: "PaddleOCR-VL", file: "assets/model6.md"},
-  { label: "MinerU 2.5", file: "assets/model7.md"},
-  { label: "LightON OCR 1B", file: "assets/model8.md"},
-  { label: "Nanonets-OCR2", file: "assets/model9.md"},
-  { label: "Qwen3-VL", file: "assets/model10.md"},
-  { label: "MonkeyOCR", file: "assets/model11.md"},
+  { label: "Infinity Parser", file: "assets/kyc/model1.md"},
+  { label: "DeepSeek-OCR", file: "assets/kyc/model2.md"},
+  { label: "OlmOCR2", file: "assets/kyc/model3.md"},
+  { label: "Dots.OCR", file: "assets/kyc/model4.md"},
+  { label: "Chandra OCR", file: "assets/kyc/model5.md"},
+  { label: "PaddleOCR-VL", file: "assets/kyc/model6.md"},
+  { label: "MinerU 2.5", file: "assets/kyc/model7.md"},
+  { label: "LightON OCR 1B", file: "assets/kyc/model8.md"},
+  { label: "Nanonets-OCR2", file: "assets/kyc/model9.md"},
+  { label: "Qwen3-VL", file: "assets/kyc/model10.md"},
+  { label: "MonkeyOCR", file: "assets/kyc/model11.md"},
 ];
 
 const docTypes = {
