@@ -7,7 +7,8 @@ const models = [
   { label: "Chandra OCR", file: "assets/model5.md", color: "#a89532" },
   { label: "PaddleOCR-VL", file: "assets/model6.md", color: "#c034eb" },
   { label: "MinerU 2.5", file: "assets/model7.md", color: "#f542e3" },
-  { label: "LightON OCR 1B", file: "assets/model8.md", color: "#32a8a2" }
+  { label: "LightON OCR 1B", file: "assets/model8.md", color: "#32a8a2" },
+  { label: "Nanonets-OCR2", file: "assets/model9.md", color: "#0b3e4d" }
 ];
 
 // === Build grid ===
