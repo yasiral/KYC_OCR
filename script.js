@@ -160,7 +160,6 @@ splitBtn.addEventListener("click", () => {
 });
 
 /* ================ SCROLL SYNC (only when active) ================ */
-let syncLock = false;
 let syncedBoxes = [];
 
 function visibleBoxes() {
