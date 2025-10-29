@@ -1,0 +1,10 @@
+{
+  "kyc": {
+    "label": "KYC Form",
+    "image": "KYC_form.jpg"
+  },
+  "arabic": {
+    "label": "Arabic Document",
+    "image": "arabic.png"
+  }
+}
