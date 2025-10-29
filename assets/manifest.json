@@ -9,15 +9,15 @@
   },
   "invoice": {
     "label": "Invoice Document",
-    "image": "Invoice.jpg"
+    "image": "invoice.jpg"
   },
   "urdu-handwriting": {
     "label": "Urdu Handwriting",
-    "image": "UrduHW.png"
+    "image": "urduhw.png"
   },
   "arabic-handwriting": {
     "label": "Arabic Handwriting",
-    "image": "arabicHW.png"
+    "image": "arabichw.png"
   },
   "research-paper": {
     "label": "Research Paper",
