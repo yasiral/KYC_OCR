@@ -3,7 +3,7 @@
     "label": "KYC Form",
     "image": "KYC_form.jpg"
   },
-  "arabic-bank-form": {
+  "arabic": {
     "label": "Arabic Document",
     "image": "arabic.png"
   },
