@@ -68,6 +68,7 @@ function populateDocTypeSelector() {
   sel.value = currentDocType;
   sel.addEventListener("change", () => {
     currentDocType = sel.value;
+    updatePreviewImage();
     loadAllMarkdowns();
   });
   toolbar.prepend(sel);
