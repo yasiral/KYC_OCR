@@ -224,3 +224,17 @@ function onScrollSync(e) {
   });
   syncLock = false;
 }
+
+function updatePreviewImage() {
+  const imagePath = `assets/${currentDocType}/${currentDocType}.png`;
+  const imageElement = document.getElementById("kycImage");
+
+  imageElement.src = imagePath;
+  imageElement.alt = `${currentDocType} document`;
+
+  // Add smooth transition if desired
+  imageElement.style.opacity = 0;
+  setTimeout(() => {
+    imageElement.style.opacity = 1;
+  }, 150);
+}
