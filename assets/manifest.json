@@ -3,7 +3,7 @@
     "label": "KYC Form",
     "image": "KYC_form.jpg"
   },
-  "arabic bank form": {
+  "arabic_bank_form": {
     "label": "Arabic Document",
     "image": "arabic.png"
   },
@@ -11,15 +11,15 @@
     "label": "Invoice Document",
     "image": "Invoice.png"
   },
-  "Urdu Handwriting": {
+  "Urdu_Handwriting": {
     "label": "Urdu Handwriting",
     "image": "UrduHW.png"
   },
-  "Arabic Handwriting": {
+  "Arabic_Handwriting": {
     "label": "Arabic Handwriting",
     "image": "arabicHW.png"
   },
-  "Research Paper": {
+  "Research_Paper": {
     "label": "Research paper",
     "image": "paper.png"
   }
