@@ -49,8 +49,8 @@ window.addEventListener("load", () => {
   enableScrollSync(false);
 });
 
-/* ================= UI BUILDERS ================= */
-function populateDocTypeSelector() {
+/* --- Auto-Detect Document Types --- */
+async function populateDocTypeSelector() {
   const toolbar = document.querySelector(".toolbar");
   const existing = document.getElementById("docTypeSelector");
   if (existing) existing.remove();
@@ -58,20 +58,37 @@ function populateDocTypeSelector() {
   const sel = document.createElement("select");
   sel.id = "docTypeSelector";
 
-  Object.entries(docTypes).forEach(([label, folder]) => {
-    const opt = document.createElement("option");
-    opt.value = folder;
-    opt.textContent = label;
-    sel.appendChild(opt);
-  });
+  try {
+    // Fetch manifest.json from assets directory
+    const res = await fetch("assets/manifest.json");
+    const data = await res.json();
 
-  sel.value = currentDocType;
-  sel.addEventListener("change", () => {
-    currentDocType = sel.value;
+    window.docManifest = data; // store globally
+
+    Object.entries(data).forEach(([key, info]) => {
+      const opt = document.createElement("option");
+      opt.value = key;
+      opt.textContent = info.label;
+      sel.appendChild(opt);
+    });
+
+    // Default selection
+    currentDocType = Object.keys(data)[0];
+    sel.value = currentDocType;
     updatePreviewImage();
-    loadAllMarkdowns();
-  });
-  toolbar.prepend(sel);
+
+    sel.addEventListener("change", () => {
+      currentDocType = sel.value;
+      updatePreviewImage();
+      loadAllMarkdowns();
+    });
+
+    toolbar.prepend(sel);
+  } catch (err) {
+    console.error("Error loading manifest.json:", err);
+    sel.innerHTML = `<option>Error loading docs</option>`;
+    toolbar.prepend(sel);
+  }
 }
 
 function buildGrid() {
@@ -225,14 +242,17 @@ function onScrollSync(e) {
   syncLock = false;
 }
 
+/* --- Dynamically Update Image Preview --- */
 function updatePreviewImage() {
-  const imagePath = `assets/${currentDocType}/${currentDocType}.png`;
+  if (!window.docManifest || !window.docManifest[currentDocType]) return;
+
+  const info = window.docManifest[currentDocType];
   const imageElement = document.getElementById("kycImage");
 
+  const imagePath = `assets/${currentDocType}/${info.image}`;
   imageElement.src = imagePath;
-  imageElement.alt = `${currentDocType} document`;
+  imageElement.alt = `${info.label} document`;
 
-  // Add smooth transition if desired
   imageElement.style.opacity = 0;
   setTimeout(() => {
     imageElement.style.opacity = 1;
