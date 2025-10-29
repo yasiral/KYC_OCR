@@ -244,17 +244,32 @@ function onScrollSync(e) {
 
 /* --- Dynamically Update Image Preview --- */
 function updatePreviewImage() {
-  if (!window.docManifest || !window.docManifest[currentDocType]) return;
-
-  const info = window.docManifest[currentDocType];
   const imageElement = document.getElementById("kycImage");
 
+  if (!window.docManifest || !window.docManifest[currentDocType]) {
+    imageElement.src = "assets/no-preview.png";
+    imageElement.alt = "No preview available";
+    return;
+  }
+
+  const info = window.docManifest[currentDocType];
   const imagePath = `assets/${currentDocType}/${info.image}`;
+
   imageElement.src = imagePath;
   imageElement.alt = `${info.label} document`;
 
+  // Fade-in effect
   imageElement.style.opacity = 0;
   setTimeout(() => {
     imageElement.style.opacity = 1;
   }, 150);
+
+  // Fallback for missing or broken images
+  imageElement.onerror = function () {
+    console.warn(`⚠️ Missing preview image for "${currentDocType}", showing fallback.`);
+    this.onerror = null;
+    this.src = "assets/no-preview.png";
+    this.alt = "No preview available";
+  };
 }
+
