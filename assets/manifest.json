@@ -7,7 +7,7 @@
     "label": "Arabic Document",
     "image": "arabic.png"
   },
-  "Invoice": {
+  "invoice": {
     "label": "Invoice Document",
     "image": "Invoice.png"
   },
@@ -20,7 +20,7 @@
     "image": "arabicHW.png"
   },
   "research-paper": {
-    "label": "Research paper",
+    "label": "Research Paper",
     "image": "paper.png"
   }
 }
