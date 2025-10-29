@@ -6,19 +6,19 @@
   "arabic bank form": {
     "label": "Arabic Document",
     "image": "arabic.png"
-  }
+  },
   "Invoice": {
     "label": "Invoice Document",
     "image": "Invoice.png"
-  }
+  },
   "Urdu Handwriting": {
     "label": "Urdu Handwriting",
     "image": "UrduHW.png"
-  }
+  },
   "Arabic Handwriting": {
     "label": "Arabic Handwriting",
     "image": "arabicHW.png"
-  }
+  },
   "Research Paper": {
     "label": "Research paper",
     "image": "paper.png"
