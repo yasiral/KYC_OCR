@@ -1,4 +1,4 @@
-**Outputs Latext, which may be further processed later on, but the model inherently doesn't seem to provide pretty HTML or Markdown**
+**Outputs Latex, which may be further processed later on, but the model inherently doesn't seem to provide pretty HTML or Markdown**
 
 ```latex
 
