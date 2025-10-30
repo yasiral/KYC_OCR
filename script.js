@@ -128,6 +128,11 @@ async function loadMarkdown(modelIndex) {
     const html = marked.parse(text, { breaks: true });
     box.innerHTML = html;
     box.dataset.raw = html;
+
+    // 🔹 Tell MathJax to typeset new math content
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([box]).catch((err) => console.error(err));
+    }
   } catch {
     box.innerHTML = `<p style="color:red">Missing file: ${file}</p>`;
   }
