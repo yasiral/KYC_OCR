@@ -27,10 +27,6 @@
     "label": "Magazines",
     "image": "magazines.png"
   },
-  "sroie": {
-    "label": "Invoice (SROIE)",
-    "image": "sroie_sample.jpg"
-  },
   "invoice-arabic": {
     "label": "Invoice (Arabic)",
     "image": "invoice_arabic_sample.jpg"
