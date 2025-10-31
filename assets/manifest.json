@@ -11,6 +11,10 @@
     "label": "Invoice Document",
     "image": "invoice.jpg"
   },
+  "invoice-arabic": {
+    "label": "Invoice (Arabic)",
+    "image": "arabic_invoice.png"
+  },
   "urdu-handwriting": {
     "label": "Urdu Handwriting",
     "image": "urduhw.jpeg"
@@ -19,6 +23,10 @@
     "label": "Arabic Handwriting",
     "image": "arabichw.jpg"
   },
+  "English_handwriting": {
+    "label": "English Handwriting",
+    "image": "English_hw.jpg"
+  },
   "research-paper": {
     "label": "Research Paper",
     "image": "paper.png"
@@ -26,10 +34,6 @@
   "magazine": {
     "label": "Magazines",
     "image": "magazines.png"
-  },
-  "invoice-arabic": {
-    "label": "Invoice (Arabic)",
-    "image": "arabic_invoice.png"
   },
   "funsd": {
     "label": "Business Form (FUNSD)",
