@@ -41,7 +41,7 @@
   },
   "medical-reports": {
     "label": "Medical Report",
-    "image": "medical_sample.jpg"
+    "image": "medical.png"
   },
   "legal-docs": {
     "label": "Legal Document",
