@@ -1,6 +1,6 @@
 **The model outpus Markdown peppered with inlins Latex rendered with MathJax syntax. Further down the line processing may be able to produce some results.**
 
-# \(\therefore {S}_{\Delta OBC} = {S}_{\Delta COD} + {S}_{\Delta BOC} - {S}_{\Delta BOC}\)
+\(\therefore {S}_{\Delta OBC} = {S}_{\Delta COD} + {S}_{\Delta BOC} - {S}_{\Delta BOC}\)
 
 \(\therefore \sum {\left( 2\right) }^{n} \cdot  \frac{1}{2} \cdot  n \cdot  {2}^{n - 1} \cdot  \left( {n + 1}\right)  = \frac{n}{2}\)
 
