@@ -1,83 +1,46 @@
----
-layout: none
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OCR Model Comparison Dashboard</title>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Libraries -->
+  <!-- KaTeX for LaTeX rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@3.0.0/dist/marked-katex-extension.min.js"></script>
+
+  <!-- Marked.js for Markdown parsing -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
 </head>
-
 <body>
-  <div class="container">
-    <h1>OCR Model Comparison Dashboard</h1>
 
-    <!-- Image -->
-    <div class="image-container">
-      <img src="assets/kyc/KYC_form.jpg" alt="Input Document" class="kyc-image" id="kycImage" />
-      <p class="image-hint">(Click to enlarge or shrink)</p>
+  <header>
+    <h1>📄 OCR Model Comparison</h1>
+    <div class="controls">
+      <label for="docSelect">Select Document Type:</label>
+      <select id="docSelect"></select>
     </div>
+  </header>
 
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <!-- Document type selector will be injected here -->
-      <input type="text" id="searchBox" placeholder="Search keyword..." />
-      <button id="clearSearch">Clear</button>
-
-      <select id="modelA"></select>
-      <select id="modelB"></select>
-      <button id="compareBtn">Show Diff</button>
-      <button id="splitModeBtn">Split Compare Mode</button>
-    </div>
-
-    <!-- Model Output Grid -->
-    <div class="grid" id="modelGrid"></div>
+  <div id="preview-container">
+    <div id="loading-indicator">Loading image...</div>
+    <img id="kycImage" class="kyc-image" src="assets/kyc/KYC_form.jpg" alt="Preview Document" />
   </div>
 
-  <!-- Markdown Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div id="modal-text"></div>
+  <main>
+    <div id="model-grid" class="model-grid"></div>
+  </main>
+
+  <!-- Fullscreen Modal Container -->
+  <div id="fullscreen-modal" class="fullscreen-modal hidden">
+    <div class="fullscreen-content">
+      <button id="close-fullscreen">✕</button>
+      <div id="fullscreen-body"></div>
     </div>
   </div>
 
-  <!-- Diff Modal -->
-  <div id="diffModal" class="modal">
-    <div class="modal-content">
-      <span class="close diff-close">&times;</span>
-      <h3>Line-by-Line Diff Viewer</h3>
-      <pre id="diffOutput"></pre>
-    </div>
-  </div>
-
-  <!-- Script -->
   <script src="script.js"></script>
-
-  <!-- MathJax for LaTeX rendering -->
-<script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$','$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    tags: 'ams'
-  },
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-  },
-  svg: { fontCache: 'global' }
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-
 </body>
 </html>
