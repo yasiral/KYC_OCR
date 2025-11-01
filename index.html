@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OCR Model Comparison Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OCR Model Comparison</title>
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- KaTeX for LaTeX rendering -->
+  <!-- KaTeX (LaTeX in markdown) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@3.0.0/dist/marked-katex-extension.min.js"></script>
@@ -15,30 +15,51 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="left">
+      <h1>📄 OCR Model Comparison</h1>
+    </div>
+    <div class="right toolbar">
+      <label for="docTypeSelector">Form type:</label>
+      <select id="docTypeSelector"></select>
 
-  <header>
-    <h1>📄 OCR Model Comparison</h1>
-    <div class="controls">
-      <label for="docSelect">Select Document Type:</label>
-      <select id="docSelect"></select>
+      <input id="searchBox" type="text" placeholder="Search in outputs…"/>
+      <button id="clearSearch" type="button">Clear</button>
+
+      <label class="split-label">Split:
+        <select id="modelA"></select>
+        <select id="modelB"></select>
+      </label>
+      <button id="splitModeBtn" type="button">Split Compare Mode</button>
     </div>
   </header>
 
-  <div id="preview-container">
-    <div id="loading-indicator">Loading image...</div>
-    <img id="kycImage" class="kyc-image" src="assets/kyc/KYC_form.jpg" alt="Preview Document" />
-  </div>
+  <!-- Main preview (sticky area) -->
+  <section id="previewSentinel">
+    <div id="preview-container">
+      <div id="loading-indicator">Loading image…</div>
+      <img id="kycImage" class="kyc-image" src="assets/kyc/KYC_form.jpg" alt="Preview document">
+    </div>
+  </section>
 
+  <!-- Grid -->
   <main>
-    <div id="model-grid" class="model-grid"></div>
+    <div id="modelGrid" class="model-grid"></div>
   </main>
 
-  <!-- Fullscreen Modal Container -->
-  <div id="fullscreen-modal" class="fullscreen-modal hidden">
+  <!-- Fullscreen model modal -->
+  <div id="fullscreen-modal" class="fullscreen-modal hidden" role="dialog" aria-modal="true">
     <div class="fullscreen-content">
-      <button id="close-fullscreen">✕</button>
+      <button id="close-fullscreen" aria-label="Close">✕</button>
       <div id="fullscreen-body"></div>
     </div>
+  </div>
+
+  <!-- Picture-in-Picture (PiP) floating preview -->
+  <div id="pip" class="pip hidden" aria-label="Preview (drag me)">
+    <img id="pipImg" src="assets/kyc/KYC_form.jpg" alt="Mini preview"/>
+    <div class="pip-handle" title="Drag to move"></div>
   </div>
 
   <script src="script.js"></script>
