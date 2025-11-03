@@ -107,7 +107,6 @@ function buildGrid(){
     { label: "OCRFlux", file: "assets/kyc/ocrflux.md" },
     { label: "SmolDocling", file: "assets/kyc/smoldocling.md" },
     { label: "Dolphin", file: "assets/kyc/dolphin.md" },
-    { label: "Marker", file: "assets/kyc/marker.md" },
     { label: "GotOCR 2.0", file: "assets/kyc/gotocr2.md" }
     
   ];
