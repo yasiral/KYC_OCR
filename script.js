@@ -104,7 +104,6 @@ function buildGrid(){
     { label: "Qwen3-VL", file: "assets/kyc/model10.md" },
     { label: "MonkeyOCR", file: "assets/kyc/model11.md" },
     { label: "IBM GraniteDocling-258M", file: "assets/kyc/ibm_granite_docling.md" },
-    { label: "OCRFlux", file: "assets/kyc/ocrflux.md" },
     { label: "SmolDocling", file: "assets/kyc/smoldocling.md" },
     { label: "Dolphin", file: "assets/kyc/dolphin.md" },
     { label: "GotOCR 2.0", file: "assets/kyc/gotocr2.md" }
