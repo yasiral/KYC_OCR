@@ -28,7 +28,6 @@
     <div>________</div>
   </div>
 
-  <h3 style="margin-top:1rem;">AMOUNT</h3>
   <div class="row">
     <div>Item 1</div>
     <div>9.60 SR</div>
