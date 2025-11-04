@@ -323,3 +323,9 @@ body {
   list-style: disc;
 }
 
+/* override old 240px cap on the readme */
+.readme:not(.collapsed),
+#readme:not(.collapsed) {
+  max-height: none;
+}
+
