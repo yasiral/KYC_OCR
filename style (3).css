@@ -1,0 +1,331 @@
+:root {
+  --topbar-h: 64px;
+  --readme-h-collapsed: 42px;
+  --pane-gap: 12px;
+  --right-min: 380px;
+  --bg: #f6f6f6;
+  --accent: #1a73e8;
+  --shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: #222;
+}
+
+/* =========== TOPBAR =========== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--topbar-h);
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  box-shadow: var(--shadow);
+}
+.topbar h1 {
+  font-size: 17px;
+  margin: 0;
+}
+.topbar-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.topbar-right select,
+.topbar-right input,
+.topbar-right button {
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 0 6px;
+  font-size: 13px;
+}
+.topbar-right button { cursor: pointer; }
+.split-label {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  color: #fff;
+  font-size: 13px;
+}
+
+/* =========== README =========== */
+.readme {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 900;
+  transition: max-height .25s ease;
+  overflow: hidden;
+}
+.readme-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+.readme-header h2 {
+  font-size: 14px;
+  margin: 0;
+}
+.readme .caret {
+  font-size: 12px;
+  opacity: 0.4;
+}
+.readme-body {
+  padding: 0 16px 12px 16px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.readme.collapsed {
+  max-height: var(--readme-h-collapsed);
+}
+.readme:not(.collapsed) {
+  max-height: 240px;
+}
+
+/* =========== MAIN LAYOUT =========== */
+.layout {
+  display: flex;
+  gap: var(--pane-gap);
+  padding: 12px 12px 12px 12px;
+}
+
+/* LEFT PANE: scrollable */
+.left-pane {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* RIGHT PANE: fixed / sticky image */
+.right-pane {
+  flex: 0 0 clamp(var(--right-min), 30vw, 460px);
+  position: sticky;
+  top: calc(var(--topbar-h) + var(--readme-h-collapsed) + 8px);
+  align-self: flex-start;
+  height: calc(100vh - var(--topbar-h) - var(--readme-h-collapsed) - 20px);
+  overflow: auto;
+}
+#preview-container {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+#loading-indicator {
+  display: none;
+  background: rgba(255,255,255,.95);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.kyc-image {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 6px;
+  cursor: zoom-in;
+  transition: transform .25s ease;
+}
+.kyc-image.enlarged {
+  transform: scale(1.05);
+  cursor: zoom-out;
+}
+.image-hint {
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* =========== MODEL GRID =========== */
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 14px;
+  min-height: 300px;
+}
+.model-box {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  min-height: 120px;
+}
+.model-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.model-header {
+  font-size: 13px;
+  margin: 0;
+}
+.maximize-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  border-radius: 6px;
+}
+.maximize-btn:hover {
+  background: rgba(255,255,255,.16);
+}
+.markdown-box {
+  padding: 10px;
+  max-height: 380px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  white-space: pre-wrap;
+  line-height: 1.35;
+}
+.markdown-box.collapsed {
+  max-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  transition: all .25s ease;
+}
+
+/* Fullscreen modal */
+.fullscreen-modal.hidden { display: none; }
+.fullscreen-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+.fullscreen-content {
+  background: #1f1f1f;
+  width: min(1000px, 94vw);
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 10px;
+  padding: 14px;
+  color: #fff;
+}
+#close-fullscreen {
+  float: right;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+/* KaTeX inside markdown */
+.markdown-box .katex-display {
+  text-align: center;
+  margin: 8px 0;
+}
+
+/* Responsive: collapse to single column on small screens */
+@media (max-width: 1020px) {
+  .layout {
+    flex-direction: column;
+  }
+  .right-pane {
+    position: static;
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+/* ====== README SECTION ENHANCEMENT ====== */
+#readme {
+  background: #f9fbff;
+  border: 1px solid #dbe3f3;
+  border-radius: 8px;
+  margin: 12px 8px 16px 8px;
+  padding: 12px 16px;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#readme.collapsed {
+  max-height: 36px;
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+
+#readmeToggle {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #1a4dab;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #e6eefc 0%, #f4f7fd 100%);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  user-select: none;
+  border: 1px solid #c9d8f3;
+}
+
+#readmeToggle:hover {
+  background: linear-gradient(90deg, #dfe8fb 0%, #edf3fe 100%);
+}
+
+#readmeToggle::after {
+  content: "▼";
+  font-size: 13px;
+  color: #1a4dab;
+  transition: transform 0.2s ease;
+}
+
+#readme.collapsed #readmeToggle::after {
+  transform: rotate(-90deg);
+}
+
+#readmeBody {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #333;
+  padding-left: 4px;
+}
+#readmeBody p {
+  margin-bottom: 8px;
+}
+#readmeBody strong {
+  color: #0f3a94;
+}
+#readmeBody ul {
+  margin: 8px 0 0 16px;
+  list-style: disc;
+}
+
+/* override old 240px cap on the readme */
+.readme:not(.collapsed),
+#readme:not(.collapsed) {
+  max-height: none;
+}
+
