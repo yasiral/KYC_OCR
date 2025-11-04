@@ -255,3 +255,71 @@ body {
     max-width: 100%;
   }
 }
+
+/* ====== README SECTION ENHANCEMENT ====== */
+#readme {
+  background: #f9fbff;
+  border: 1px solid #dbe3f3;
+  border-radius: 8px;
+  margin: 12px 8px 16px 8px;
+  padding: 12px 16px;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#readme.collapsed {
+  max-height: 36px;
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+
+#readmeToggle {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #1a4dab;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #e6eefc 0%, #f4f7fd 100%);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  user-select: none;
+  border: 1px solid #c9d8f3;
+}
+
+#readmeToggle:hover {
+  background: linear-gradient(90deg, #dfe8fb 0%, #edf3fe 100%);
+}
+
+#readmeToggle::after {
+  content: "▼";
+  font-size: 13px;
+  color: #1a4dab;
+  transition: transform 0.2s ease;
+}
+
+#readme.collapsed #readmeToggle::after {
+  transform: rotate(-90deg);
+}
+
+#readmeBody {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #333;
+  padding-left: 4px;
+}
+#readmeBody p {
+  margin-bottom: 8px;
+}
+#readmeBody strong {
+  color: #0f3a94;
+}
+#readmeBody ul {
+  margin: 8px 0 0 16px;
+  list-style: disc;
+}
+
