@@ -4,74 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OCR Model Comparison Dashboard</title>
-
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Markdown + diff + KaTeX (you were using these earlier) -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@3.0.0/dist/marked-katex-extension.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/diff@5.0.0/dist/diff.min.js"></script>
 </head>
+
 <body>
-  <!-- Sticky top ribbon -->
+  <!-- ======= FIXED TOP BAR ======= -->
   <header class="topbar">
-    <div class="topbar-left">
-      <h1>OCR Model Comparison</h1>
-    </div>
-    <div class="topbar-right">
-      <!-- document type -->
-      <label for="docTypeSelector">Form / Doc:</label>
+    <h1>OCR MODEL COMPARISON</h1>
+    <div class="controls">
+      <label for="docTypeSelector">Document Type:</label>
       <select id="docTypeSelector"></select>
 
-      <!-- search -->
-      <input type="text" id="searchBox" placeholder="Search in model outputs…" />
-      <button id="clearSearch" type="button">Clear</button>
+      <input id="searchBox" type="text" placeholder="Search..." />
+      <button id="clearSearch">Clear</button>
 
-      <!-- split compare -->
-      <label class="split-label">Split:
-        <select id="modelA"></select>
-        <select id="modelB"></select>
-      </label>
-      <button id="splitModeBtn" type="button">Split Compare Mode</button>
-      <button id="compareBtn" type="button">Show Diff</button>
+      <span class="split-label">Split:</span>
+      <select id="modelA"></select>
+      <select id="modelB"></select>
+      <button id="splitModeBtn">Split Compare</button>
+      <button id="compareBtn">Diff View</button>
     </div>
   </header>
 
-  <!-- Collapsible README -->
-  <section id="readme" class="collapsed">
-    <div class="readme-header" id="readmeToggle">
-      <h2>About this dashboard</h2>
-      <span class="caret" aria-label="toggle readme">▼</span>
-    </div>
-    <div class="readme-body" id="readmeBody">
-      <!-- filled dynamically from script.js -->
-      <p>Loading dashboard info…</p>
+  <!-- ======= READ ME SECTION ======= -->
+  <section id="readme" class="readme">
+    <div id="readmeToggle">📘 About This Dashboard</div>
+    <div id="readmeBody">
+      <!-- dynamically injected summary -->
     </div>
   </section>
 
-  <!-- Main 2-column canvas -->
-  <div class="layout">
-    <!-- LEFT: scrollable model outputs -->
-    <div class="left-pane">
+  <!-- ======= MAIN LAYOUT ======= -->
+  <main class="main-layout">
+    <section id="left-column">
       <div id="modelGrid" class="model-grid"></div>
-    </div>
+    </section>
 
-    <!-- RIGHT: fixed / sticky input form -->
-    <aside class="right-pane" id="rightPane">
-      <div id="preview-container">
-        <div id="loading-indicator">Loading image…</div>
-        <img src="assets/kyc/KYC_form.jpg" alt="Input Document" class="kyc-image" id="kycImage" />
-        <p class="image-hint">(Click to zoom)</p>
+    <aside id="right-column">
+      <div id="preview-wrapper">
+        <div id="loading-indicator" class="loading">Loading image...</div>
+        <img id="kycImage" alt="Form Preview" />
       </div>
     </aside>
-  </div>
+  </main>
 
-  <!-- Fullscreen modal for maximize -->
-  <div id="fullscreen-modal" class="fullscreen-modal hidden" role="dialog" aria-modal="true">
-    <div class="fullscreen-content">
-      <button id="close-fullscreen" aria-label="Close">✕</button>
+  <!-- ======= FULLSCREEN MODAL ======= -->
+  <div id="fullscreen-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="close-fullscreen" class="close-btn">×</button>
       <div id="fullscreen-body"></div>
     </div>
   </div>
