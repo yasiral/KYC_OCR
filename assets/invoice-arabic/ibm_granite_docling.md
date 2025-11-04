@@ -4,14 +4,7 @@
   <meta charset="UTF-8" />
   <title>Invoice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 480px; margin: 20px auto; line-height: 1.4; }
-    .header { margin-bottom: 1rem; }
-    .row { display: flex; justify-content: space-between; margin: 4px 0; }
-    .title { font-weight: bold; }
-    .totals { margin-top: 1rem; border-top: 1px solid #000; padding-top: 0.5rem; }
-    .center { text-align: center; margin-top: 1.5rem; }
-  </style>
+  
 </head>
 <body>
   <div class="header">
